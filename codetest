@@ -1,7 +1,23 @@
 {
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
+ 
   "resources": [
+  {
+  "name": "examplevm",
+  "type": "Microsoft.Compute/virtualMachines",
+  "apiVersion": "2017-03-30",
+  "properties": {
+    "storageProfile": {
+      "copy": [{
+        "name": "dataDisks",
+        "count": 3,
+        "input": {
+          "lun": "[copyIndex('dataDisks')]",
+          "createOption": "Empty",
+          "diskSizeGB": "1023"
+        }
+      }],
     {
       "apiVersion": "2016-01-01",
       "type": "Microsoft.Storage/storageAccounts",
